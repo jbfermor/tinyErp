@@ -1,0 +1,57 @@
+<%= turbo_frame_tag "reception_#{@reception.id}" do %>
+  <h1>Entrega #<%= @reception.id %> Details</h1>
+  <h3>Estado: <%= @reception.state %></h3>
+  <div class="row">
+    <div class="col-md-12">
+      <%= turbo_frame_tag "reception_lines" do %>
+        <div class="card mt-3">
+          <div class="card-header">
+            <h4>Productos a recibir</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped text-center">
+                <thead>
+                  <tr>
+                    <th>Estado</th>
+                    <th>Producto</th>
+                    <th>Pedido</th>
+                    <th>Entregado</th>
+                    <th>Pendiente</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @reception.reception_lines.each do |line| %>
+                    <tr id="reception_line_<%= line.id %>">
+                      <td><%= line.state %></td>
+                      <td><%= link_to line.product.product_name, line.product %></td>
+                      <td><%= line.quantity_to_receive %></td>
+                      <td class="text-success"><%= line.quantity_received %></td>
+                      <td class="text-danger"><%= line.quantity_to_receive - line.quantity_received %></td>
+                      <% if line.state != 'Entregado' %>
+                        <td>
+                          <%= button_to 'Completo', reception_line_partial_deliveries_path(line), method: :post, class: 'btn btn-success' %>
+                        <td>
+                      <% else %>
+                        <td class="text-success">Completado</td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-end">
+           
+          </div>
+        </div>
+      <% end %>
+
+      <%= render "partial_deliveries/partial_deliveries_table" %>
+      <%= render "partial_deliveries/new_partial_delivery" %>
+
+    </div>
+  </div>
+<% end %>
+

@@ -1,0 +1,98 @@
+<!-- app/views/suppliers/_form.html.erb -->
+<%= form_with(model: supplier, local: true) do |form| %>
+  <% if supplier.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(supplier.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% supplier.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label "NIF *", class: 'form-label' %>
+    <%= form.text_field :nif, class: 'form-control' %>
+    <% if supplier.errors[:nif].any? %>
+      <div class="text-danger">
+        <%= supplier.errors[:nif].join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Nombre comercial *", class: 'form-label' %>
+    <%= form.text_field :commercial_name, class: 'form-control' %>
+    <% if supplier.errors[:commercial_name].any? %>
+      <div class="text-danger">
+        <%= supplier.errors[:commercial_name].join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Persona de contacto", class: 'form-label' %>
+    <%= form.text_field :contact_person, class: 'form-control' %>
+    <% if supplier.errors[:contact_person].any? %>
+      <div class="text-danger">
+        <%= supplier.errors[:contact_person].join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Dirección", class: 'form-label' %>
+    <%= form.text_field :address, class: 'form-control' %>
+    <% if supplier.errors[:address].any? %>
+      <div class="text-danger">
+        <%= supplier.errors[:address].join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Ciudad", class: 'form-label' %>
+    <%= form.text_field :city, class: 'form-control' %>
+    <% if supplier.errors[:city].any? %>
+      <div class="text-danger">
+        <%= supplier.errors[:city].join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Código postal", class: 'form-label' %>
+    <%= form.text_field :postal_code, class: 'form-control' %>
+    <% if supplier.errors[:postal_code].any? %>
+      <div class="text-danger">
+        <%= supplier.errors[:postal_code].join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Provincia", class: 'form-label' %>
+    <%= form.text_field :province, class: 'form-control' %>
+    <% if supplier.errors[:province].any? %>
+      <div class="text-danger">
+        <%= supplier.errors[:province].join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Teléfono", class: 'form-label' %>
+    <%= form.text_field :phone, class: 'form-control' %>
+    <% if supplier.errors[:phone].any? %>
+      <div class="text-danger">
+        <%= supplier.errors[:phone].join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit 'Guardar', class: 'btn btn-primary' %>
+  </div>
+<% end %>

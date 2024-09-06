@@ -1,0 +1,5 @@
+<% if @products_return.state == "Pendiente" %>
+  <%= render "products_returns/returned_pendiente" %>
+<% else %>
+  <%= render "products_returns/returned_devuelto" %>
+<% end %>

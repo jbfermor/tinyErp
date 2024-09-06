@@ -1,0 +1,68 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Productos</h1>
+    <div>
+      <button id="filter-button" class="btn btn-info">Filtro</button>
+      <%= link_to 'Nuevo', new_product_path, class: 'btn btn-success' %>
+    </div>
+  </div>
+
+  <div id="filter-form" style="display: none;">
+    <%= form_with(url: products_path, method: :get, local: true, data: { turbo_frame: 'products' }) do %>
+      <div class="mb-3">
+        <%= label_tag :q, 'Search', class: 'form-label' %>
+        <%= text_field_tag :q, params[:q], class: 'form-control' %>
+      </div>
+      <%= submit_tag 'Buscar', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+
+  <%= turbo_frame_tag 'products' do %>
+    <% if @products.any? %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Stock</th>
+            <th>Proveedor</th>
+            <th>Estado</th>
+            <th COLSPAN="3">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @products.each do |product| %>
+            <tr>
+              <td><%= product.product_name %></td>
+              <td><%= product.stock %></td>
+              <td><%= link_to product.supplier.commercial_name, product.supplier %></td>
+              <td>
+                <%= form_with url: toggle_state_product_path(product), method: :patch, data: { turbo_frame: dom_id(product) }, class: "d-inline" do %>
+                  <div class="form-check form-switch form-check-success">
+                    <%= check_box_tag 'state', '1', product.Activo?, class: 'form-check-input', onchange: 'this.form.submit()' %>
+                  </div>
+                <% end %>
+              </td>
+              <td><%= link_to 'Mostrar', product, class: 'btn btn-primary btn-sm' %></td>
+              <td><%= link_to 'Editar', edit_product_path(product), class: 'btn btn-warning btn-sm' %></td>
+              <td><%= button_to 'Eliminar', product_path(product), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No se encontró ningún resultado</p>
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  document.getElementById('filter-button').addEventListener('click', function(event) {
+    event.preventDefault();
+    var filterForm = document.getElementById('filter-form');
+    if (filterForm.style.display === 'none') {
+      filterForm.style.display = 'block';
+    } else {
+      filterForm.style.display = 'none';
+    }
+  });
+</script>

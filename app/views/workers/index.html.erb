@@ -1,0 +1,45 @@
+<!-- app/views/workers/index.html.erb -->
+<%= content_for :page_title, "Personas" %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Personas</h1>
+    <%= link_to 'Nueva persona', new_worker_path, class: "btn btn-success" %>
+  </div>
+  
+  <!-- Filtro -->
+  <div class="mb-3">
+    <button class="btn btn-secondary" id="toggleFilterButton">Filtro</button>
+  </div>
+
+  <div id="filterForm" class="mb-3" style="display: none;">
+    <%= form_with url: workers_path, method: :get, local: false do |f| %>
+      <div class="input-group">
+        <%= f.text_field :query, class: "form-control", placeholder: "Buscar..." %>
+        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render "workers/workers_table" %>
+
+</div>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  var filterButton = document.getElementById("toggleFilterButton");
+  var filterForm = document.getElementById("filterForm");
+
+  if (filterButton && filterForm) {
+    filterButton.addEventListener("click", function() {
+      if (filterForm.style.display === "none") {
+        filterForm.style.display = "block";
+      } else {
+        filterForm.style.display = "none";
+      }
+    });
+  }
+});
+</script>

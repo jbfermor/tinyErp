@@ -1,0 +1,34 @@
+es:
+  devise:
+    sessions:
+      signed_in: 'Has iniciado sesión correctamente.'
+      signed_out: 'Has cerrado sesión correctamente.'
+      already_signed_out: 'Ya has cerrado sesión.'
+    passwords:
+      send_instructions: 'Recibirás un correo con instrucciones sobre cómo restablecer tu contraseña en unos minutos.'
+      updated: 'Tu contraseña se ha cambiado correctamente.'
+      updated_not_active: 'Tu contraseña se ha cambiado correctamente, pero tu cuenta no está activada.'
+    registrations:
+      signed_up: 'Tu cuenta se ha registrado exitosamente.'
+      signed_up_but_inactive: 'Tu cuenta se ha registrado, pero necesita ser activada. Revisa tu correo electrónico para ver las instrucciones de activación.'
+      signed_up_but_locked: 'Tu cuenta se ha registrado, pero está bloqueada.'
+      signed_up_but_unconfirmed: 'Tu cuenta se ha registrado, pero no está confirmada. Revisa tu correo electrónico para ver las instrucciones de confirmación.'
+      update_needs_confirmation: 'Tu cuenta se ha actualizado correctamente, pero necesitamos verificar tu nueva dirección de correo electrónico. Revisa tu correo para ver las instrucciones de confirmación.'
+      updated: 'Tu cuenta se ha actualizado correctamente.'
+    confirmations:
+      confirmed: 'Tu cuenta ha sido confirmada exitosamente.'
+      send_instructions: 'Recibirás un correo con instrucciones sobre cómo confirmar tu cuenta en unos minutos.'
+      send_paranoid_instructions: 'Si tu dirección de correo electrónico está registrada, recibirás un correo con instrucciones sobre cómo confirmar tu cuenta en unos minutos.'
+    failure:
+      already_authenticated: 'Ya has iniciado sesión.'
+      unauthenticated: 'Necesitas iniciar sesión o registrarte para continuar.'
+      invalid: 'Correo electrónico o contraseña no válidos.'
+      invalid_token: 'El token no es válido.'
+      locked: 'Tu cuenta está bloqueada.'
+      last_attempt: 'Advertencia: Tienes un intento más antes de que tu cuenta sea bloqueada.'
+      not_found_in_database: 'No se encontró la cuenta.'
+      timeout: 'Tu sesión ha expirado. Por favor, inicia sesión de nuevo.'
+      inactive: 'Tu cuenta no está activada aún.'
+      unconfirmed: 'Tu cuenta no está confirmada.'
+      expired: 'Tu token ha expirado. Por favor, solicita uno nuevo.'
+      unauthenticated: 'Necesitas iniciar sesión para continuar.'

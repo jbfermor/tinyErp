@@ -1,0 +1,64 @@
+<div class="accordion mt-2" id="accordionSellLines">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <h5>Líneas de venta</h5>
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionSellLines">
+      <div class="accordion-body">
+        <% if @products_return.sell && @products_return.sell.sell_lines.any? %>
+          <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th class="text-success">Vendida</th>
+                    <th class="text-danger">Devuelta</th>
+                    <th class="text-warning">Restante</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @products_return.sell.sell_lines.each do |sell_line| %>
+                    <tr>              
+                      <td><%= link_to sell_line.product.product_name, sell_line.product %></td>
+                      <td class="text-success"><%= sell_line.product_quantity %></td>
+                      <td class="text-danger"><%= qty_of_returned_line_by_sell_id(sell_line) %></td>
+                      <td class="text-warning"><%= sell_line_qty_minus_returned(sell_line)  %></td>
+                      <% if @products_return_lines.find_by(sell_line_id: sell_line.id) %>
+                        <td>
+                          <button class="btn btn-sm btn-warning">Añadido</button>
+                          
+                        </td>
+                      <% else%>
+                      <!-- Formulario inline para devolver producto -->
+                        <%= form_with model: [ @products_return, ProductsReturnLine.new ], method: :post, local: true do |f| %>
+                          <td>
+                            <div class="input-group">
+                              <%= f.number_field :quantity, min: 1, value: sell_line_qty_minus_returned(sell_line), max: sell_line_qty_minus_returned(sell_line), class: "form-control text-center" %>
+                              <%= f.submit "Devolver", class: "btn btn-sm btn-secondary" %>
+                            </div>
+                          </td>
+                          <%= f.hidden_field :sell_line_id, value: sell_line.id %>
+                        <% end %>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+          </div>
+          <% else %>
+            <div class="card-body">
+              <p>No hay productos para devolver.</p>
+            </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  
+    

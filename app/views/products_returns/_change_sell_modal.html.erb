@@ -1,0 +1,42 @@
+<!-- Modal para Cambiar Venta -->
+<div class="modal fade" id="changeSellModal" tabindex="-1" aria-labelledby="changeSellModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeSellModalLabel">Cambiar Venta Asociada</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% if @sells.any? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @sells.each do |sell| %>
+              <tr>
+                <td><%= sell.id %></td>
+                <td><%= sell.created_at.strftime("%d/%m/%Y") %></td>
+                <td><%= sell.total_sell %> €</td>
+                <td>
+                  <%= form_with model: @products_return, method: :patch, local: true do |f| %>
+                    <%= f.hidden_field :sell_id, value: sell.id %>
+                    <%= f.submit "Seleccionar", class: "btn btn-primary" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% else %>
+          <p>No hay ventas para este cliente</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<%= form_for(@user, url: bio_path, html: { method: :put, class: 'needs-validation', novalidate: true }) do |f| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Errors:</h4>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :email, class: 'form-label' %>
+    <%= f.email_field :email, autofocus: true, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password, class: 'form-label' %>
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+    <div class="form-text">Leave blank if you don't want to change it</div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, class: 'form-label' %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :current_password, class: 'form-label' %>
+    <%= f.password_field :current_password, autocomplete: "off", class: 'form-control', required: true %>
+    <div class="form-text">We need your current password to confirm your changes</div>
+  </div>
+
+  <%= f.fields_for :bio, @user.bio || Bio.new do |bio_form| %>
+    <div class="mb-3">
+      <%= bio_form.label :nif, class: 'form-label' %>
+      <%= bio_form.text_field :nif, class: 'form-control', required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= bio_form.label :commercial_name, class: 'form-label' %>
+      <%= bio_form.text_field :commercial_name, class: 'form-control', required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= bio_form.label :address, class: 'form-label' %>
+      <%= bio_form.text_field :address, class: 'form-control', required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= bio_form.label :city, class: 'form-label' %>
+      <%= bio_form.text_field :city, class: 'form-control', required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= bio_form.label :postal_code, class: 'form-label' %>
+      <%= bio_form.text_field :postal_code, class: 'form-control', required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= bio_form.label :province, class: 'form-label' %>
+      <%= bio_form.text_field :province, class: 'form-control', required: true %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.submit "Update", class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<%= form_for(@user, url: bio_path, html: { method: :delete, class: 'needs-validation', novalidate: true }) do |f| %>
+  <div class="mb-3">
+    <%= f.submit "Delete my account", class: 'btn btn-danger', data: { confirm: "Are you sure you want to delete your account? This action cannot be undone." } %>
+  </div>
+<% end %>

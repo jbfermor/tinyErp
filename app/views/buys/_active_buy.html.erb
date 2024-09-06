@@ -1,0 +1,87 @@
+
+  <div class="card mt-3">
+    <div class="card-header">
+      <h4>Pendientes de añadir</h4>
+    </div>
+    <div class="card-body">
+      <% if @products.present? %>
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @products.each do |product| %>
+                <tr id="product-<%= product.id %>">
+                  <td><%= link_to product.product_name, product %></td>
+                  <td><%= product.stock %></td>
+                  <td><%= product.buy_price %> €</td>
+                  <td>
+                    <% if @buy.buy_lines.exists?(product_id: product.id) %>
+                      <span class="text-danger">Añadido</span>
+                    <% else %>
+                      <%= form_with model: [@buy, BuyLine.new], url: buy_buy_lines_path(@buy), method: :post, data: { turbo_frame: "buy_lines" }, local: true do |form| %>
+                        <%= form.hidden_field :product_id, value: product.id %>
+                        <%= form.number_field :product_quantity, value: 1, min: 1, class: "form-control d-inline w-50" %>
+                        <%= form.submit 'Añadir', class: 'btn btn-success btn-sm' %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p>No products available for the selected supplier.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-header d-flex justify-content-between">
+      <h4>Carrito</h4>
+      <h4 class="text-danger">Total: <%= @buy.total_buy %> €</h4>
+    </div>
+    <div class="card-body">
+      <%= turbo_frame_tag "buy_lines" do %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>Cambiar cantidad</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @buy.buy_lines.each do |line| %>
+              <tr id="buy_line_<%= line.id %>">
+                <td><%= link_to line.product.product_name, line.product %></td>
+                <td><%= line.product_quantity %></td>
+                <td><%= line.total_buy_line %> €</td>
+                <td>
+                  <%= form_with model: [@buy, line], url: buy_buy_line_path(@buy, line), method: :patch, data: { turbo_frame: "buy_line_#{line.id}" }, local: true do |form| %>
+                    <%= form.number_field :product_quantity, value: line.product_quantity, min: 1, class: "form-control d-inline w-50" %>
+                    <%= form.submit 'Cambiar', class: 'btn btn-secondary btn-sm' %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= button_to 'Eliminar', buy_buy_line_path(@buy, line), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm', form: { data: { turbo_frame: "buy_line_#{line.id}" } } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= button_to 'Confirmar pedido', place_order_buy_path(@buy), method: :post, class: 'btn btn-primary mt-3', data: { confirm: '¿Estás seguro de que deseas realizar el pedido? Esta acción no se puede deshacer.' } %>

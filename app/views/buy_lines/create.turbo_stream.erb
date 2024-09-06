@@ -1,0 +1,2 @@
+<%= turbo_stream.append "buy_lines", partial: "buys/buy_line", locals: { buy_line: @buy_line } %>
+<%= turbo_stream.replace "total_buy", partial: "buys/total_buy", locals: { buy: @buy } %>

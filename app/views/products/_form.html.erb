@@ -1,0 +1,63 @@
+<%= form_with(model: product, local: true) do |form| %>
+
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :supplier_id, 'Supplier', class: 'form-label' %>
+    <% if @supplier %>
+      <%= form.hidden_field :supplier_id, value: @supplier.id %>
+      <p><%= @supplier.commercial_name %></p>
+    <% else %>
+      <%= form.collection_select :supplier_id, current_user.suppliers, :id, :commercial_name, {}, { class: 'form-control' } %>
+    <% end %>
+  </div> 
+
+  <div class="mb-3">
+    <%= form.label "Nombre" %>
+    <%= form.text_field :product_name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Precio del proveedor" %>
+    <%= form.number_field :buy_price, step: '0.01', class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :stock %>
+    <%= form.number_field :stock, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :min_stock %>
+    <%= form.number_field :min_stock, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "Descripción", class: 'form-label' %>
+    <%= form.text_area :product_description, rows: 3, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :state, "Estado" %>
+    <%= form.select :state, options_for_select(Product.states.keys.map { |state| [state.humanize, state] }, product.state), class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label "PVP" %>
+    <%= form.number_field :sell_price, step: '0.01', class: 'form-control' %>
+  </div>
+  
+  <div class="mb-3">
+    <%= form.submit product.new_record? ? 'Crear Producto' : 'Actuaizar Producto', class: 'btn btn-primary' %>
+  </div>
+<% end %>

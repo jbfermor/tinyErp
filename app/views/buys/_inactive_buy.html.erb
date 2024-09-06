@@ -1,0 +1,33 @@
+<div class="card mt-3">
+    <div class="card-header d-flex justify-content-between">
+      <h4>Productos pedidos</h4>
+      <h4 class="text-danger">Total: <%= @buy.total_buy %> €</h4>
+    </div>
+    <div class="card-body">
+      <%= turbo_frame_tag "buy_lines" do %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @buy.buy_lines.each do |line| %>
+              <tr id="buy_line_<%= line.id %>">
+                <td><%= line.product.product_name %></td>
+                <td><%= line.product_quantity %></td>
+                <td><%= line.total_buy_line %> €</td>
+                <td><%= link_to line.state, @user.receptions.find_by(buy_id: @buy), {title: @user.receptions.find_by(buy_id: @buy).updated_at.strftime("%d/%m/%Y")} %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= button_to 'Reactivar pedido', change_state_buy_path(@buy), method: :patch, class: 'btn btn-primary mt-3' %>

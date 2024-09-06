@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-between">
+  <h2>Devolución de Producto</h2>
+  <button class="btn btn-primary"><%= @products_return.state %></button>
+</div>
+
+
+
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3>Cliente</h3>
+    <span><%= complete_name(@products_return.customer) %></span>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#changeCustomerModal">
+      Cambiar Cliente
+    </button>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3>Venta</h3>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#changeSellModal">
+      Seleccionar Venta
+    </button>
+  </div>
+  <div class="card-body">
+    <% if @products_return.sell %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>Fecha</td>
+            <td>Total</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= link_to @products_return.sell.id, @products_return %></td>
+            <td><%= @products_return.sell.created_at.strftime("%d/%m/%Y") %></td>
+            <td><%= @products_return.sell.total_sell%></td>
+          </tr>
+        </tbody>
+      </table>
+      <%= render "products_returns/previous_returned" %>
+      <%= render 'sell_lines/sell_lines_section', products_return: @products_return %>
+    <% else %>
+      <span>No hay venta asociada</span>
+    <% end %> 
+  </div>
+</div>
+
+
+<%= render 'products_returns/products_return_lines_table', sells: @products_return.customer.sells %>
+
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h3>Motivo</h3>
+  </div>
+  <% if @products_return_lines.any? %>
+  <div class="card-body">
+    <%= form_with url: confirm_return_products_return_path(@products_return), method: :post do |f| %>
+      <%= f.text_field :reason, class: "form-control" %>
+      <div class="form-check mt-2">
+        <%= check_box_tag :stockable, true, true, class: "form-check-input", id: "stockable" %>
+        <%= f.label "¿Quieres añadirlo al stock?", class:"form-label", for: "stockable" %>
+      </div>
+      <%= f.submit "Confirmar devolución", class: "mt-2 btn btn-success" %>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+
+<!-- Modals -->
+<%= render 'products_returns/change_customer_modal', customers: current_user.customers %>
+<%= render 'products_returns/change_sell_modal', sells: @products_return.customer.sells %>
+

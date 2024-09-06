@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <%= link_to "tinyERP", root_path, class: "navbar-brand ms-2" %>
+  <div class="text-white">
+    <% if user_signed_in? %>
+      <%= link_to current_user.email, current_user.bio, class:"btn btn-info ms-3 me-3" if user_signed_in? %>
+      <span class="btn btn-warning"><%= current_user.role  %></span>
+    <% end %>
+    <button class="navbar-toggler ms-3" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <% if user_signed_in? %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Configuración
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+              <li class="nav-item">
+                <%= link_to 'Proveedores', suppliers_path, class: 'nav-link' %>
+              </li> 
+              <li class="nav-item">
+                <%= link_to 'Productos', products_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Clientes', customers_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Personas', workers_path, class: 'nav-link' %>
+              </li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Compras
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Compras', buys_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Entregas', receptions_path, class: 'nav-link' %>
+              </li>
+          </ul>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Ventas
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+            <li class="nav-item">
+              <%= link_to 'Ventas', sells_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Devoluciones', products_returns_path, class: 'nav-link' %>
+            </li>
+
+          </ul>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Inventario', inventory_movements_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to 'Entrar', new_user_session_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Registrarse', new_user_registration_path, class: 'nav-link' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

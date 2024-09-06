@@ -1,0 +1,5 @@
+<% if @sell.state == "Vendido" %>
+  <%= render "sells/vendido" %>
+<% elsif @sell.state == "Pendiente" %>
+  <%= render "sells/pendiente" %>
+<% end %>

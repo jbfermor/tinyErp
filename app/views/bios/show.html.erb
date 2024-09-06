@@ -1,0 +1,16 @@
+<div class="card mt-4">
+  <div class="card-header d-flex justify-content-between">
+    <h4><%= @bio.commercial_name%></h4>
+    <%= link_to 'Editar', edit_bio_path(@bio), class: 'btn btn-warning' %>
+  </div>
+  <div class="card-body">
+    <p>Usuario: <%= @bio.user.email %></p>
+    <p>NIF: <%= @bio.nif %></p>
+    <p>Teléfono: <%= @bio.phone %></p>
+    <p>Dirección: <%= @bio.address %></p>
+    <p>Ciudad:: <%= @bio.city %></p>
+    <p>Código postal: <%= @bio.postal_code %></p>
+    <p>Provincia: <%= @bio.province %></p>
+  </div>
+</div>
+

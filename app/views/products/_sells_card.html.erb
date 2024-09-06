@@ -1,0 +1,36 @@
+ <div class="accordion mt-3" id="accordionProductSells">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingProductSells">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductSells" aria-expanded="true" aria-controls="collapseProductSells">
+        Ventas      
+      </button>
+    </h2>
+    <div id="collapseProductSells" class="accordion-collapse collapse" aria-labelledby="headingProductSells" data-bs-parent="#accordionProductSells">
+      <div class="accordion-body">
+        <%= turbo_frame_tag "sells" do %>
+          <% if @sells.any? %>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Cliente</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sells.each do |sell| %>
+                  <tr>
+                    <td><%= link_to sell.created_at.strftime("%d/%m/%Y"), sell %></td>
+                    <td><%= link_to get_customer_name(sell), get_customer(sell) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p>No se encontró ningún resultado</p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+ 

@@ -1,0 +1,17 @@
+es:
+  errors:
+    messages:
+      not_saved: "No se pudo guardar %{resource}. Hubo %{count} error(es)."
+      taken: "ya está en uso"
+      blank: "no puede estar en blanco"
+      invalid: "es inválido"
+      too_short: "es demasiado corto (mínimo %{count} caracteres)"
+      too_long: "es demasiado largo (máximo %{count} caracteres)"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "ya está en uso"
+          taken: "ya está en uso"

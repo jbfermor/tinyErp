@@ -1,0 +1,55 @@
+<!-- app/views/receptions/index.html.erb -->
+<h1>Entregas</h1>
+
+<!-- Botón para mostrar/ocultar el filtro -->
+<div class="mb-3">
+  <button class="btn btn-secondary" id="toggleFilterButton">Filtro</button>
+</div>
+
+<!-- Formulario de filtro oculto por defecto -->
+<div id="filterForm" class="mb-3" style="display: none;">
+  <%= form_with url: receptions_path, method: :get, local: false do |f| %>
+    <div class="input-group">
+      <%= f.text_field :query, class: "form-control", placeholder: "Buscar..." %>
+      <button class="btn btn-outline-primary" type="submit">Buscar</button>
+    </div>
+  <% end %>
+</div>
+
+<!-- Marco turbo para actualizar dinámicamente la tabla de recepciones -->
+<%= turbo_frame_tag "receptions" do %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Proveedor</th>
+          <th>Compra</th>
+          <th>Estado</th>
+          <th>Última entrega</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @filtered_receptions.each do |reception| %>
+          <tr>
+            <td><%= reception.supplier.commercial_name %></td>
+            <td><%= link_to reception.buy.created_at.strftime("%d/%m/%Y"), @user.buys.find(reception.buy.id) %></td>
+            <td><%= reception.state.titleize %></td>
+            <td><%= reception.updated_at.strftime('%d-%m-%Y') %></td>
+            <td>
+              <%= link_to 'Mostrar', reception_path(reception), class: 'btn btn-info btn-sm' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<!-- Script para mostrar/ocultar el filtro -->
+<script>
+  document.getElementById('toggleFilterButton').addEventListener('click', function() {
+    var filterForm = document.getElementById('filterForm');
+    filterForm.style.display = (filterForm.style.display === 'none') ? 'block' : 'none';
+  });
+</script>

@@ -1,0 +1,8 @@
+<!-- app/views/suppliers/new.html.erb -->
+<div class="container mt-5">
+  <h1 class="mb-4">Nuevo proveedor</h1>
+  
+  <%= render 'form', supplier: @supplier %>
+  
+  <%= link_to 'Volver', suppliers_path, class: 'btn btn-secondary mt-3' %>
+</div>

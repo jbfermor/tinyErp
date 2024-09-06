@@ -1,0 +1,23 @@
+<!-- Modal para Cambiar Cliente -->
+<div class="modal fade" id="changeCustomerModal" tabindex="-1" aria-labelledby="changeCustomerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeCustomerModalLabel">Cambiar Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: @products_return, method: :patch, local: true do |f| %>
+          <div class="mb-3">
+            <label for="customerSelect" class="form-label">Selecciona un Cliente</label>
+            <%= select_tag :customer_id, options_for_select(@customers.map { |c| [complete_name(c), c.id]}) , { prompt: "Seleccionar Cliente", class: "form-select" } %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <%= f.submit "Actualizar Cliente", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

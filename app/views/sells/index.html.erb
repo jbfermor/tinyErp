@@ -1,0 +1,36 @@
+<h1>Ventas</h1>
+
+<div class="mb-3 d-flex justify-content-between">
+  <button class="btn btn-secondary" id="toggleFilterButton">Filtro</button>
+  <%= button_to 'Nueva Venta', sells_path, method: :post, data: { turbo: true }, class: "btn btn-primary" %>
+</div>
+
+
+<div id="filterForm" class="mb-3" style="display: none;">
+  <%= form_with url: sells_path, method: :get, local: false do |f| %>
+    <div class="input-group">
+      <%= f.text_field :query, class: "form-control", placeholder: "Buscar..." %>
+      <button class="btn btn-outline-primary" type="submit">Buscar</button>
+    </div>
+  <% end %>
+</div>
+
+<%= turbo_frame_tag "sells" do %>
+  <%= render 'sells/sells_table', sells: @sells %>
+<% end %>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const toggleFilterButton = document.getElementById("toggleFilterButton");
+  const filterForm = document.getElementById("filterForm");
+
+  toggleFilterButton.addEventListener("click", function() {
+    if (filterForm.style.display === "none") {
+      filterForm.style.display = "block";
+    } else {
+      filterForm.style.display = "none";
+    }
+  });
+});
+</script>
+

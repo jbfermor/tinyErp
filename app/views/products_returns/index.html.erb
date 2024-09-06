@@ -1,0 +1,30 @@
+<h1>Devoluciones de Productos</h1>
+
+<div class="mb-3 d-flex justify-content-between">
+  <button class="btn btn-secondary" id="toggleFilterButton">Filtro</button>
+  <%= button_to 'Nueva Devolución', products_returns_path, method: :post, class: "btn btn-primary" %>
+</div>
+
+<div id="filterForm" class="mb-3" style="display: none;">
+  <%= form_with url: products_returns_path, method: :get, local: false do |f| %>
+    <div class="input-group">
+      <%= f.text_field :query, class: "form-control", placeholder: "Buscar por cliente o producto..." %>
+      <button class="btn btn-outline-primary" type="submit">Buscar</button>
+    </div>
+  <% end %>
+</div>
+
+<%= turbo_frame_tag "products_returns" do %>
+  <%= render 'products_returns/products_returns_table' %>
+<% end %>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const toggleFilterButton = document.getElementById("toggleFilterButton");
+  const filterForm = document.getElementById("filterForm");
+
+  toggleFilterButton.addEventListener("click", function() {
+    filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "block" : "none";
+  });
+});
+</script>

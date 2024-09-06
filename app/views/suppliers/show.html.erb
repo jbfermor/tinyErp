@@ -1,0 +1,46 @@
+<%= content_for :page_title, @supplier.commercial_name %>
+
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between">
+      <h2 class="h4"><%= @supplier.commercial_name %></h2>
+      <div>
+        <%= link_to 'Editar', edit_supplier_path(@supplier), class: 'btn btn-warning' %>
+        <%= button_to 'Eliminar', supplier_path(@supplier), method: :delete, class: 'btn btn-danger' %>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><strong>Persona de contacto:</strong> <%= @supplier.contact_person %></p>
+      <p><strong>Dirección:</strong> <%= @supplier.address %></p>
+      <p><strong>Ciudad:</strong> <%= @supplier.city %></p>
+      <p><strong>Código postal:</strong> <%= @supplier.postal_code %></p>
+      <p><strong>Provincia:</strong> <%= @supplier.province %></p>
+      <p><strong>Teléfono:</strong> <%= @supplier.phone %></p>
+    </div>
+    <div class="card-footer">
+        <%= link_to 'Volver', suppliers_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>  
+
+  <%= render "suppliers/products_card" %>
+  <%= render "suppliers/buys_card" %>
+
+</div>
+
+<script>
+
+  document.getElementById("add-buy-with-supplier").addEventListener("click", function() {
+    var supplierId = this.getAttribute("data-supplier-id");
+    fetch("<%= buys_path %>", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<%= form_authenticity_token %>"
+      },
+      body: JSON.stringify({ buy: { supplier_id: supplierId } })
+    }).then(response => response.json()).then(data => {
+      window.location.href = `/buys/${data.id}`;
+    });
+  });
+
+</script>

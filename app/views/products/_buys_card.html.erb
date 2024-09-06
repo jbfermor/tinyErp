@@ -1,0 +1,43 @@
+<div class="accordion mt-3" id="accordionPreviousReturned">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Compras      
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionPreviousReturned">
+      <div class="accordion-body">
+        <%= turbo_frame_tag "buys" do %>
+          <% if @buys.any? %>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th colspan="2">Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% @buys.each do |buy| %>
+                <tr>
+                  <td><%= link_to buy.created_at.strftime("%d/%m/%Y"), buy %></td>
+                  <% if buy.state != "Creado" %>
+                    <td><%= link_to buy.state, get_reception(@user, buy), { title: get_reception(@user, buy).updated_at.strftime("%d/%m/%Y") } %></td>
+                  <% else %>
+                    <td><%= buy.state %></td>
+                  <% end %>
+                  <td>
+                    <%= button_to 'Eliminar', buy_path(buy), method: :delete, data: { confirm: '¿Seguro que se desea eliminar esta compra?' }, class: 'btn btn-danger btn-sm' %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p>No se encontró ningún resultado</p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<!-- app/views/customers/_form.html.erb -->
+<%= form_with(model: customer, local: true) do |form| %>
+  <% if customer.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Errors:</h4>
+      <ul>
+        <% customer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="form-group">
+    <%= form.label "NIF" %>
+    <%= form.text_field :nif, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Nombre" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Apellido 1" %>
+    <%= form.text_field :surname1, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Apellido 2" %>
+    <%= form.text_field :surname2, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Teléfono" %>
+    <%= form.telephone_field :phone, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Email" %>
+    <%= form.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Dirección" %>
+    <%= form.text_field :address, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Ciudad" %>
+    <%= form.text_field :city, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Código postal" %>
+    <%= form.text_field :postal_code, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Provincia" %>
+    <%= form.text_field :province, class: "form-control" %>
+  </div>
+
+  <div class="form-group mt-2">
+    <%= form.submit "Guardar cliente", class: "btn btn-primary" %>
+  </div>
+<% end %>

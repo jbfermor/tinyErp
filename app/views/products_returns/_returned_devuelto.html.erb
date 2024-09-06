@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-between">
+  <h2>Devolución de Producto</h2>
+  <button class="btn btn-primary"><%= @products_return.state %></button>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h3>Cliente</h3>
+  </div>
+  <div class="card-body">
+    <%= complete_name(@products_return.customer) %>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3>Venta</h3>
+  </div>
+  <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>Fecha</td>
+            <td>Total</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= link_to @products_return.sell.id, @products_return %></td>
+            <td><%= @products_return.sell.created_at.strftime("%d/%m/%Y") %></td>
+            <td><%= @products_return.sell.total_sell%></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3>Líneas de la devolución</h3>
+    <h4>Total <span class="btn btnsm btn-warning"><%= @products_return.products_return_lines.sum(:total_return) %> €</span></h4>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th class="text-danger">Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @products_return.products_return_lines.each do |line| %>
+                <tr>
+                  <td><%= line.created_at.strftime("%d/%m/%Y") %></td>
+                  <td><%= link_to line.product.product_name, line.product %></td>
+                  <td class="text-danger"><%= line.quantity  %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h3>Motivo</h3>
+  </div>
+  <div class="card-body">
+    <%= @products_return.reason %>
+  </div>
+</div>
+
+<div class="text-end mt-3">
+    <%= button_to "Eliminar", @products_return, method: :delete, class: "btn btn-danger" %>
+</div>

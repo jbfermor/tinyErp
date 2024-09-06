@@ -1,0 +1,25 @@
+<div id="partial-delivery-section" style="display: none;" class=" card mt-4">
+    <div class="card-header">
+      <h4>Añade una entrega parcial</h4>
+    </div>
+    <div  class="card-body">
+      <div class="d-flex justify-content-between align-items-center my-3">
+        <%= turbo_frame_tag "partial-delivery" do %>
+          <%= form_for(@partial_delivery, html: { class: "d-flex align-items-center" }) do |f| %>
+            <div class="me-2">
+              <%= f.label :reception_line_id, "Producto", class: "form-label me-2" %>
+              <%= f.collection_select :reception_line_id, @reception_lines.where.not(state: "Entregado"), :id, :product_name, prompt: "Seleccione un producto", class: "form-control" %>
+            </div>
+            <div class="me-2">
+              <%= f.label :qty_delivered, "Cantidad", class: "form-label me-2" %>
+              <%= f.number_field :qty_delivered, class: "form-control", min: 1 %>
+            </div>
+            <div>
+              <%= f.submit "Crear entrega parcial", class: "btn btn-success" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+

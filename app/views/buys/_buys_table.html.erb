@@ -1,0 +1,34 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Número de Pedido</th>
+      <th>Fecha de Creación</th>
+      <th>Proveedor</th>
+      <th>Estado</th>
+      <th colspan="4">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @buys.any? %>
+      <% @buys.each do |buy| %>
+        <tr>
+          <td><%= buy.id %></td>
+          <td><%= buy.created_at.strftime("%d/%m/%Y") %></td>
+          <td><%= buy.supplier.commercial_name %></td>
+          <td><%= buy.state %></td>
+          <td>
+            <% if buy.receptions.any? and buy.state != "Entregado" %>
+              <%= link_to 'Entregar', reception_path(Reception.find_by(buy_id: buy)), class: 'btn btn-sm btn-success' %>
+            <% end %>
+          </td>
+          <td><%= link_to 'Mostrar', buy_path(buy), class: 'btn btn-sm btn-info' %></td>
+          <td><%= button_to 'Eliminar', buy_path(buy), method: :delete, class: 'btn btn-sm btn-danger', data: { turbo_confirm: '¿Seguro que se quiere eliminarse este pedido?' } %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5">No se encontró ningún resultado</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

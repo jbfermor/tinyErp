@@ -1,0 +1,36 @@
+<h1>Venta <%= @sell.id %> - <%= @sell.state %> </h1>
+
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between">
+    <h4><%= @sell.customer_id.present? ? @sell.cuestomer.name : "Cliente Desconocido" %></h4>
+    <h4><%= @sell.updated_at.strftime("%d/%m/%Y") %></h4>
+  </div>
+  <div class="card-body">
+    <h4>Productos Vendidos</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sell.sell_lines.each do |sell_line| %>
+          <tr>
+            <td><%= link_to sell_line.product.product_name, sell_line.product %></td>
+            <td><%= sell_line.product.sell_price %> € </td>
+            <td><%= sell_line.product_quantity %></td>
+            <td><%= sell_line.total_sell_line %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer d-flex justify-content-between">
+    <%= button_to "Crear devolución", products_returns_path(ProductsReturn.new, sell_id: @sell.id), class: "btn btn-sm btn-info" %>
+    <h3>Total venta: <%= @sell.total_sell %> € </h3>
+  </div>
+</div>
+

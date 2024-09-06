@@ -1,0 +1,2 @@
+module PartialDeliveriesHelper
+end

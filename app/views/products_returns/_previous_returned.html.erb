@@ -1,0 +1,39 @@
+<div class="accordion mt-2" id="accordionPreviousReturned">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <h5>Devoluciones previas <span class="badge bg-danger"><%= @previous_returned.count ||= 0 %></span></h5>
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionPreviousReturned">
+      <div class="accordion-body">
+        <% if @previous_returned.any? %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th class="text-danger">Cantidad</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @previous_returned.each do |line| %>
+                <tr>
+                  <td><%= link_to line.created_at.strftime("%d/%m/%Y"), line.products_return %></td>
+                  <td><%= link_to line.product.product_name, line.product %></td>
+                  <td class="text-danger"><%= line.quantity  %></td>
+                  <td><%= button_to 'Eliminar', products_return_line_path(line),method: :delete, class: 'btn btn-danger' %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+        <div class="card-body">
+          <p>No hay devoluciones creadas</p>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

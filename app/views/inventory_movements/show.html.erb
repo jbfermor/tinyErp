@@ -1,0 +1,35 @@
+<!-- app/views/inventory_movements/show.html.erb -->
+<h1>Movimientos de <%= @product.product_name %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Subtipo</th>
+      <th>Recepción/Venta</th>
+      <th>Cantidad</th>
+      <th>Stock Final</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movements.each do |movement| %>
+      <tr>
+        <td><%= movement.created_at.strftime("%d/%m/%Y") %></td>
+        <td><%= movement.movement_type.capitalize %></td>
+        <td><%= movement.movement_subtype.capitalize %></td>
+        <td>
+          <% if movement.reception_line.present? %>
+            <%= link_to movement.reception_line.reception.created_at.strftime("%d/%m/%Y"), reception_path(movement.reception_line.reception) %>
+          <% elsif movement.sell_line.present? %>
+            <%= link_to movement.sell_line.sell.created_at.strftime("%d/%m/%Y"), sell_path(movement.sell_line.sell) %>
+          <% else %>
+            Manual
+          <% end %>
+        </td>
+        <td><%= movement.quantity %></td>
+        <td><%= movement.stock_final %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

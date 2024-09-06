@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h1>Compra #<%= @buy.id %></h1>
+
+  <% if @buy.supplier.present? %>
+    <h3>Proveedor: <%= @buy.supplier.commercial_name %></h3>
+  <% else %>
+    <div class="mb-4">
+      <%= form_with url: update_supplier_buy_path(@buy), method: :patch, local: true do %>
+        <div class="form-group">
+          <label for="supplier">Selecciona proveedor:</label>
+          <%= select_tag :supplier_id, options_from_collection_for_select(current_user.suppliers, 'id', 'name'), class: 'form-control' %>
+        </div>
+        <%= submit_tag 'Selecciona Proveedor', class: 'btn btn-primary mt-2' %>
+      <% end %>
+    </div>
+  <% end %>
+  <h3>Estado: <%= @buy.state %></h3>
+  <% if @buy.state == "Creado" %>
+    <%= render "buys/active_buy" %>
+  <% else %>
+    <%= render "buys/inactive_buy" %>
+  <% end %>
+</div>

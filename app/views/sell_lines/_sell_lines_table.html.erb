@@ -1,0 +1,26 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Stock</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+      <th>Total</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% sell_lines.each do |sell_line| %>
+      <tr>
+        <td><%= sell_line.product.product_name %></td>
+        <td><%= sell_line.product.stock %></td>
+        <td><%= sell_line.product.sell_price %> €</td>
+        <td><%= sell_line.product_quantity %></td>
+        <td><%= sell_line.total_sell_line %> € </td>
+        <td>
+          <%= button_to 'Eliminar', sell_sell_line_path(@sell, sell_line), method: :delete, data: { turbo_confirm: "¿Estás seguro?" }, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,53 @@
+<h3>Venta <%= @sell.id %> - <%= @sell.state %> </h3>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h4>Añadir productos</h4>  
+  </div>
+  <div class="card-body">
+    <div id="product_search_section">
+      <%= form_with(url: @sell, method: :get, local: true, data: { turbo_frame: 'product_table' }) do %>
+        <div class="mb-3 d-flex justify-content-between">
+          <%= text_field_tag :q, params[:q], class: 'form-control' %>
+          <%= submit_tag 'Buscar', class: 'btn btn-primary' %>
+        </div>   
+      <% end %>
+      <%= turbo_frame_tag "product_table" do %>
+        <div data-controller="product-quantity">
+          <%= render 'sell_lines/products_table', products: @products %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h4>Carrito</h4>
+  </div>
+  <div class="card-body">
+    <%= turbo_frame_tag "sell_lines" do %>
+      <%= render 'sell_lines/sell_lines_table', sell_lines: @sell.sell_lines %>
+    <% end %>
+  </div>
+  <div class="card-footer text-end">
+    <h4>Total carrito: <%= @sell.sell_lines.sum(:total_sell_line) %></h4>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h4>Cliente</h4>
+  </div>
+  <div class="card-body">
+  <%= form_with model: @sell, local: true do |f| %>
+    <div class="mb-3">
+      <%= f.label :customer_id, "Seleccionar Cliente" %>
+      <%= select_tag :customer_id, options_for_select(@customers.map { |customer| [complete_name(customer), customer.id] }), class: "form-select" %>    </div>
+    <div class="card-footer">
+      <%= f.submit 'Confirmar Venta', class: 'btn btn-success' %>
+  <% end %>
+    </div>
+  </div>
+</div>
+

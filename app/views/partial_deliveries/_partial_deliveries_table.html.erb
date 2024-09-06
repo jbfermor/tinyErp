@@ -1,0 +1,50 @@
+<div class=" card mt-4">
+    <div class="card-header">
+      <h4>Entregas realizadas</h4>
+    </div>
+    <div class="card-body">
+      <%= turbo_frame_tag "partial_deliveries" do %>
+        <% if @partial_deliveries.any? %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @partial_deliveries.each do |line| %>
+                <tr>
+                  <td><%= line.created_at.strftime("%d/%m/%Y") %></td>
+                  <td><%= link_to line.product.product_name, line.product %></td>
+                  <td><%= line.qty_delivered %></td>
+                  <td><%= button_to "Eliminar", partial_delivery_path(line), method: :delete, class: "btn btn-sm btn-danger" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p>No hay entregas añadidas</p>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="card-footer d-flex justify-content-end">
+      <% unless check_completed_lines %>
+        <button id="toggle-partial-delivery-button" class="btn btn-warning btn-block">Nueva entrega parcial</button> 
+        <%= button_to 'Entregar todo', complete_reception_path(@reception), method: :patch, class: 'btn btn-success' %>
+      <% end %>
+    </div>
+  </div>
+
+  
+<script>
+
+  document.getElementById('toggle-partial-delivery-button').addEventListener('click', function(event) {
+    event.preventDefault();
+    var productsSection = document.getElementById('partial-delivery-section');
+    productsSection.style.display = productsSection.style.display === 'none' ? 'block' : 'none';
+  });
+  
+</script>

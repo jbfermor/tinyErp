@@ -1,0 +1,32 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+
+      <th>Cliente</th>
+      <th>Total</th>
+      <th>Estado</th>
+      <th colspan="2">Acciones</th>
+    </tr>
+  </thead>
+<tbody>
+  <% if sells.present? %>
+    <% sells.each do |sell| %>
+      <tr>
+        <td><%= sell.created_at.strftime("%d/%m/%Y") %></td>
+        <td><%= sell.customer&.name || "Cliente desconocido" %></td>
+        <td><%= sell.total_sell %> € </td>
+        <td><%= sell.state %></td>
+        <td><%= link_to 'Ver', sell_path(sell), class: "btn btn-info btn-sm" %></td>
+        <td><%= button_to 'Eliminar', sell_path(sell), method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn btn-danger btn-sm" %></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="6">No se encontraron ventas</td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+
+

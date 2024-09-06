@@ -1,0 +1,41 @@
+<h1>Añadir Producto</h1>
+<div class="mb-3">
+  <%= form_with url: sell_sell_lines_path(@sell), local: true do |f| %>
+    <div class="mb-3">
+      <label for="productSearch">Buscar Producto</label>
+      <input type="text" id="productSearch" class="form-control" placeholder="Buscar..." data-action="input->product-search#filter" />
+    </div>
+
+    <table class="table" id="productsTable">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%= product.product_name %></td>
+            <td><%= product.sell_price %> €</td>
+            <td><%= product.stock %></td>
+            <td>
+              <%= number_field_tag "sell_line[product_quantity]", nil, min: 1, max: product.stock, class: "form-control quantity-input", data: { action: "input->product-quantity#updateTotal", product_price: product.price } %>
+            </td>
+            <td><span id="total_sell_line">0.00</span>€</td>
+            <td>
+              <%= hidden_field_tag "sell_line[product_id]", product.id %>
+              <%= hidden_field_tag "sell_line[total_sell_line]", 0, class: "total-sell-line" %>
+              <%= submit_tag "Añadir", class: "btn btn-primary" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
+

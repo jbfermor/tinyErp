@@ -1,0 +1,43 @@
+<div class="accordion mt-3" id="accordionProductReturns">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingProductReturns">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProductReturns" aria-expanded="true" aria-controls="collapseProductReturns">
+        Entregas      
+      </button>
+    </h2>
+    <div id="collapseProductReturns" class="accordion-collapse collapse" aria-labelledby="headingProductReturns" data-bs-parent="#accordionProductReturns">
+      <div class="accordion-body">
+        <%= turbo_frame_tag "returns" do %>
+          <% if @returns.any? %>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th colspan="2">Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% @returns.each do |returned| %>
+                <tr>
+                  <td><%= link_to returned.created_at.strftime("%d/%m/%Y"), returned.products_return %></td>
+                  <% if returned.state != "Pendiente" %>
+                    <td><%= link_to returned.state, returned.products_return %></td>
+                  <% else %>
+                    <td><%= returned.state %></td>
+                  <% end %>
+                  <td>
+                    <%= button_to 'Eliminar', products_return_line_path(returned), method: :delete, data: { confirm: '¿Seguro que se desea eliminarlo?' }, class: 'btn btn-danger btn-sm' %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p>No se encontró ningún resultado</p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

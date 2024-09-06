@@ -1,0 +1,66 @@
+/*
+ *= require_tree .
+ *= require_self
+ */
+ 
+ @import "bootstrap";
+
+ /* Estilos personalizados */
+ body {
+   background-color: #f8f9fa;
+ }
+ 
+ .central-window {
+   background-color: white;
+   border-radius: 15px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   padding: 20px;
+   max-width: 95%;
+   margin: 40px auto;
+ }
+ 
+ .navbar-nav .nav-link {
+   color: white !important;
+ }
+ 
+ .table-hover tbody tr:hover {
+   background-color: #f1f1f1;
+ }
+ 
+ /* Aplicar estilos oscuros al encabezado de todas las tablas */
+ table thead {
+   background-color: #343a40;
+   color: white;
+ }
+
+ table {
+  text-align: center;
+ }
+ 
+ /* Botones personalizados */
+ .btn {
+   border-radius: 20px;
+ }
+ 
+ .btn-sm {
+   border-radius: 15px;
+ }
+ 
+ /* Clases Bootstrap personalizadas para no repetir */
+ .btn-show {
+   @extend .btn, .btn-primary, .btn-sm;
+ }
+ 
+ .btn-edit {
+   @extend .btn, .btn-warning, .btn-sm;
+ }
+ 
+ .btn-delete {
+   @extend .btn, .btn-danger, .btn-sm;
+ }
+ 
+ /* Estilos globales para las tablas */
+ .table-custom {
+   @extend .table, .table-striped, .table-hover;
+ }
+ 

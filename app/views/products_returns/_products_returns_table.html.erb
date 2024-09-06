@@ -1,0 +1,29 @@
+<% if @products_returns.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Cliente</th>
+        <th>Venta</th>
+        <th colspan="2">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products_returns.each do |line| %>
+        <tr>
+          <td><%= line.created_at.strftime("%d/%m/%Y") %></td>
+          <td><%= line.state  %></td>
+          <td><%= link_to complete_name(line.customer), line.customer %></td>
+          <td><%= link_to line.sell.id, line.sell if line.sell%></td>
+          <td><%= link_to 'Ver', line, class: 'btn btn-info btn-sm' %></td>
+          <td><%= button_to 'Eliminar', products_return_path(line),method: :delete, class: 'btn btn-danger btn-sm' %></td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No hay devoluciones creadas</p>
+<% end %>
+

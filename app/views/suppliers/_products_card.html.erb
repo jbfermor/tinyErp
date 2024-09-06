@@ -1,0 +1,42 @@
+<div class="accordion mt-3" id="accordionSupplierProducts">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingSupplierProducts">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSupplierProducts" aria-expanded="true" aria-controls="collapseSupplierProducts">
+        Productos      
+      </button>
+    </h2>
+    <div id="collapseSupplierProducts" class="accordion-collapse collapse" aria-labelledby="headingSupplierProducts" data-bs-parent="#accordionSupplierProducts">
+      <div class="accordion-body">
+        <%= turbo_frame_tag "buys" do %>
+        <%= link_to "Nuevo Producto", new_product_path, class: "btn btn-sm btn-success mb-3" %>
+          <% if @products.any? %>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nmmbre</th>
+                  <th>Precio</th>
+                  <th>Stock</th>
+                  <th colspan="2">Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% @products.each do |product| %>
+                <tr>
+                  <td><%= link_to product.product_name, product %></td>
+                  <td><%= product.buy_price %></td>
+                  <td><%= product.stock %></td>
+                  <td>
+                    <%= button_to 'Eliminar', product_path(product), method: :delete, data: { confirm: '¿Seguro que se desea eliminar esta compra?' }, class: 'btn btn-danger btn-sm' %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p>No se encontró ningún resultado</p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

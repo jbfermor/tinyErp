@@ -1,0 +1,60 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Proveedores</h1>
+    <div>
+      <button id="filter-button" class="btn btn-info">Filtro</button>
+      <%= link_to 'Nuevo Proveedor', new_supplier_path, class: 'btn btn-success' %>
+    </div>
+  </div>
+
+  <div id="filter-form" style="display: none;">
+    <%= form_with(url: suppliers_path, method: :get, local: true, data: { turbo_frame: 'suppliers' }) do %>
+      <div class="mb-3">
+        <%= label_tag :q, 'Buscar', class: 'form-label' %>
+        <%= text_field_tag :q, params[:q], class: 'form-control' %>
+      </div>
+      <%= submit_tag 'Buscar', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+
+  <%= turbo_frame_tag 'suppliers' do %>
+    <% if @suppliers.any? %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>NIF</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th colspan="3">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @suppliers.each do |supplier| %>
+            <tr>
+              <td><%= supplier.nif %></td>
+              <td><%= supplier.commercial_name %></td>
+              <td><%= supplier.phone %></td>
+              <td><%= link_to 'Mostrar', supplier_path(supplier), class: 'btn btn-info btn-sm' %></td>
+              <td><%= link_to 'Editar', edit_supplier_path(supplier), class: 'btn btn-warning btn-sm' %></td>
+              <td><%= button_to 'Eliminar', supplier_path(supplier), method: :delete, data: { turbo_method: :delete, turbo_confirm: '¿Seguro que se quiere eliminar este proveedor?' }, class: 'btn btn-danger btn-sm' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No se encontró ningún resultado</p>
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  document.getElementById('filter-button').addEventListener('click', function(event) {
+    event.preventDefault();
+    var filterForm = document.getElementById('filter-form');
+    if (filterForm.style.display === 'none') {
+      filterForm.style.display = 'block';
+    } else {
+      filterForm.style.display = 'none';
+    }
+  });
+</script>

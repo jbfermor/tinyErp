@@ -1,0 +1,22 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Stock</th>
+      <th>Precio de compra</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.each do |product| %>
+      <tr>
+        <td><%= product.product_name %></td>
+        <td><%= product.stock %></td>
+        <td><%= product.buy_price %> €</td>
+        <td>
+          <button type="button" class="btn btn-sm btn-primary select-product" data-product-id="<%= product.id %>" data-product-name="<%= product.product_name %>" data-product-price="<%= product.buy_price %>">Añadir</button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
